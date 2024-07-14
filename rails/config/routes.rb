@@ -10,7 +10,11 @@ Rails.application.routes.draw do
         registrations: 'api/v1/auth/registrations', 
         sessions: 'api/v1/auth/sessions'
       }
-      resources :posts, only: [:show]
+      resources :posts, only: [:show, :index]
+      namespace :current do
+        resource :user, only: [:show]
+        resources :posts, only: [:create, :update, :destroy]
+      end
     end
   end
 end

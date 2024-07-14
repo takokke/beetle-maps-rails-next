@@ -1,13 +1,12 @@
 class Api::V1::PostsController < ApplicationController
     def show
         post = Post.find(params[:id])
-        render json: post, methods: [:image_url]
+        render json: post
     end
 
-
-    private
-
-    def posts_parameter
-        
+    def index
+        posts = Post.all
+        render json: posts
     end
+    
 end
