@@ -11,6 +11,7 @@ Rails.application.routes.draw do
         sessions: 'api/v1/auth/sessions'
       }
       resources :posts, only: [:show, :index]
+      resource :map, only: [:show]
       namespace :current do
         resource :user, only: [:show]
         resources :posts, only: [:create, :update, :destroy]
