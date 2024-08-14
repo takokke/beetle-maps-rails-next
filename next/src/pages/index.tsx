@@ -11,7 +11,7 @@ const Index: NextPage = () => {
 
   return (
     <>
-      <div>Rails疎通確認</div>
+      <div className='text-orange-300'>Rails疎通確認</div>
       <div>レスポンスメッセージ: {data.message}</div>
     </>
   )
