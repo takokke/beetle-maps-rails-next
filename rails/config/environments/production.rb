@@ -80,5 +80,16 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # url_for(image)のホスト部分を登録
+  # ダメだった
+  # s3.ap-northeast-1.amazonaws.com
+
+
+  # ↓ダメだった
+  # :host = "localhost" :port = 80
+  # ホスト名localhostからの通信を許可
+  # config.hosts << "localhost" 
+
   Rails.application.routes.default_url_options[:host] = 'backend.beetle-maps.com'
+  # config.hosts << "beetle-maps-alb-backend-1705141282.ap-northeast-1.elb.amazonaws.com" 
+
 end

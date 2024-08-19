@@ -1,6 +1,6 @@
 export type PostType = {
     id : number;
-    creature_name: string;
+    creatureName: string;
     caption: string;
     latitude: number;
     longitude: number;
