@@ -1,36 +1,43 @@
-import type { NextPage } from 'next'
-import useSWR from 'swr'
-import { fetcher } from '@/utils'
+import { Box, Container, Grid } from '@mui/material'
 import camelcaseKeys from 'camelcase-keys'
-import { PostType } from '@/types/Post'
-import Image from 'next/image'
+import type { NextPage } from 'next'
+import Link from 'next/link'
+import useSWR from 'swr'
+import Error from '@/components/Error'
 import Loading from '@/components/Loading'
+import PostCard from '@/components/PostCard'
+import { styles } from '@/styles'
+import { PostType } from '@/types/Post'
+import { fetcher } from '@/utils'
 
 const Index: NextPage = () => {
   const url = process.env.NEXT_PUBLIC_API_BASE_URL + '/posts'
   const { data, error } = useSWR(url, fetcher)
 
-  if (error) return <div className='text-orange-300'>An error has occurred.</div>
-  if (!data) return <Loading/>
+  if (error) return <Error />
+  if (!data) return <Loading />
 
   const posts = camelcaseKeys(data)
 
   return (
     <>
-      <div className='text-w-bold'>投稿</div>
-      <div>
-        {posts.map((post: PostType, i: number) => (
-         <div key={i}>
-          <p>{post.creatureName}</p>
-          <Image
-            src={post.imageUrl}
-            width={200}
-            height={200}
-            alt="生き物の画像"
-          />
-         </div>
-        ))}
-      </div>
+      <Box css={styles.pageMinHeight} sx={{ backgroundColor: '#e6f2ff' }}>
+        <Container maxWidth="md" sx={{ pt: 6 }}>
+          <Grid container spacing={4}>
+            {posts.map((post: PostType, i: number) => (
+              <Grid key={i} item xs={12} md={4}>
+                <Link href={'/posts/' + post.id}>
+                  <PostCard
+                    imageUrl={post.imageUrl}
+                    creatureName={post.creatureName}
+                    userName={post.user.name}
+                  ></PostCard>
+                </Link>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      </Box>
     </>
   )
 }
