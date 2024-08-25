@@ -5,12 +5,13 @@ import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useForm, SubmitHandler, Controller } from 'react-hook-form'
-import { useUserState } from '@/hooks/useGlobalState'
+import { useSnackbarState, useUserState } from '@/hooks/useGlobalState'
 import { SignInFormData } from '@/types/SignInFormData'
 
 const SignIn: NextPage = () => {
   const router = useRouter()
   const [user, setUser] = useUserState()
+  const [, setSnackbar] = useSnackbarState()
 
   const { handleSubmit, control } = useForm<SignInFormData>({
     defaultValues: { email: '', password: '' },
@@ -46,9 +47,17 @@ const SignIn: NextPage = () => {
         localStorage.setItem('client', res.headers['client'])
         localStorage.setItem('uid', res.headers['uid'])
 
+        // データフェッチの状態を完了にする
         setUser({
           ...user,
           isFetched: false,
+        })
+
+        // スナックバーを表示させる
+        setSnackbar({
+          message: 'サインインに成功しました',
+          severity: 'success',
+          pathname: '/',
         })
 
         router.push('/')
@@ -56,6 +65,13 @@ const SignIn: NextPage = () => {
       .catch((e: AxiosError<{ error: string }>) => {
         console.log(e.message)
         setIsLoading(false)
+
+        // スナックバーを表示させる
+        setSnackbar({
+          message: '登録ユーザーが見つかりません',
+          severity: 'error',
+          pathname: '/sign_in',
+        })
       })
   }
 

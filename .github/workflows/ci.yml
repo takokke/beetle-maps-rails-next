@@ -1,0 +1,22 @@
+name: Continuous Integration
+
+on:
+  push:
+
+# ジョブの定義
+jobs:
+  # eslintのルール違反がないかチェック
+  eslint:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: next
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install packages
+        run: npm install
+
+      - name: Run lint
+        run: npm run lint
