@@ -4,12 +4,12 @@ import { useEffect } from 'react'
 import { useUserState, useSnackbarState } from '@/hooks/useGlobalState'
 
 const SignOut: NextPage = () => {
-  localStorage.clear()
   const router = useRouter()
   const [, setUser] = useUserState()
   const [, setSnackbar] = useSnackbarState()
 
   useEffect(() => {
+    localStorage.clear()
     setUser({
       id: 0,
       name: '',
