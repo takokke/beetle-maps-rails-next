@@ -1,7 +1,6 @@
 import { Box, Container, Grid } from '@mui/material'
 import camelcaseKeys from 'camelcase-keys'
 import type { NextPage } from 'next'
-import Link from 'next/link'
 import useSWR from 'swr'
 import Error from '@/components/Error'
 import Loading from '@/components/Loading'
@@ -26,13 +25,11 @@ const Index: NextPage = () => {
           <Grid container spacing={4}>
             {posts.map((post: PostType, i: number) => (
               <Grid key={i} item xs={12} md={4}>
-                <Link href={'/posts/' + post.id}>
-                  <PostCard
-                    imageUrl={post.imageUrl}
-                    creatureName={post.creatureName}
-                    userName={post.user.name}
-                  ></PostCard>
-                </Link>
+                <PostCard
+                  imageUrl={post.imageUrl}
+                  creatureName={post.creatureName}
+                  userName={post.user.name}
+                ></PostCard>
               </Grid>
             ))}
           </Grid>

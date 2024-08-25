@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["backend.beetle-maps.com", "rails"],
+    domains: ['backend.beetle-maps.com', 'rails'],
   },
 }
 
