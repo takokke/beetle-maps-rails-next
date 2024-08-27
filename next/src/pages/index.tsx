@@ -27,30 +27,28 @@ const Index: NextPage = () => {
   }
 
   return (
-    <>
-      <Box css={styles.pageMinHeight} sx={{ backgroundColor: '#e6f2ff' }}>
-        <Container maxWidth="lg" sx={{ pt: 6 }}>
-          <Grid container spacing={4}>
-            {posts.map((post: PostType, i: number) => (
-              <Grid key={i} item xs={12} md={4}>
-                <PostCard
-                  imageUrl={post.imageUrl}
-                  creatureName={post.creatureName}
-                  userName={post.user.name}
-                ></PostCard>
-              </Grid>
-            ))}
-          </Grid>
-          <Box sx={{ display: 'flex', justifyContent: 'center', py: 6 }}>
-            <Pagination
-              count={meta.totalPages}
-              page={meta.currentPage}
-              onChange={handleChange}
-            />
-          </Box>
-        </Container>
-      </Box>
-    </>
+    <Box css={styles.pageMinHeight} sx={{ backgroundColor: '#e6f2ff' }}>
+      <Container maxWidth="lg" sx={{ pt: 6 }}>
+        <Grid container spacing={4}>
+          {posts.map((post: PostType, i: number) => (
+            <Grid key={i} item xs={12} md={4}>
+              <PostCard
+                imageUrl={post.imageUrl}
+                creatureName={post.creatureName}
+                userName={post.user.name}
+              ></PostCard>
+            </Grid>
+          ))}
+        </Grid>
+        <Box sx={{ display: 'flex', justifyContent: 'center', py: 6 }}>
+          <Pagination
+            count={meta.totalPages}
+            page={meta.currentPage}
+            onChange={handleChange}
+          />
+        </Box>
+      </Container>
+    </Box>
   )
 }
 
