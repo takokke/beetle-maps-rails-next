@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useForm, SubmitHandler, Controller } from 'react-hook-form'
 import { useSnackbarState, useUserState } from '@/hooks/useGlobalState'
+import { styles } from '@/styles'
 import { SignInFormData } from '@/types/SignInFormData'
 
 const SignIn: NextPage = () => {
@@ -77,9 +78,9 @@ const SignIn: NextPage = () => {
 
   return (
     <Box
+      css={styles.pageMinHeight}
       sx={{
         backgroundColor: '#EDF2F7',
-        minHeight: 'calc(100vh - 57px)',
       }}
     >
       <Container maxWidth="sm">
