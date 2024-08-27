@@ -36,6 +36,7 @@ const PostCard = (props: PostCardProps) => {
             blurDataURL={props.imageUrl}
             alt="生き物の画像"
             objectFit="cover"
+            placeholder="blur"
           />
         </Box>
 
