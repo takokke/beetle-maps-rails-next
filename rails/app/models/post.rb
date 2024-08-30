@@ -11,8 +11,13 @@ class Post < ApplicationRecord
     validates :longitude, presence: true
     validates :discover_date, presence: true
 
+    # 画像をリサイズする
     def image_url
-        # 紐づいている画像のURLを取得する
-        image.attached? ? url_for(image) : nil
+        if image.attached?
+            image_variant = image.variant(resize_to_limit: [700, nil]).processed
+            url_for(image_variant)
+        else
+            nil
+        end
     end
 end

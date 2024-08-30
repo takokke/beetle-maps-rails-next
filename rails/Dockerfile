@@ -1,5 +1,11 @@
 FROM ruby:3.1.2
-RUN apt-get update -qq && apt-get install -y vim
+
+# 画像を加工するために、コンテナにImageMagickとvipsをインストール
+RUN apt-get update -qq && \
+    apt-get install -y \
+    vim \
+    imagemagick \
+    libvips-dev
 
 RUN mkdir /myapp
 WORKDIR /myapp
