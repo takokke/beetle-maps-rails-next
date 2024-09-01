@@ -243,6 +243,7 @@ DEPENDENCIES
   devise_token_auth
   image_processing (~> 1.2)
   kaminari
+  mini_magick
   mysql2 (~> 0.5)
   puma (~> 5.0)
   rack-cors
