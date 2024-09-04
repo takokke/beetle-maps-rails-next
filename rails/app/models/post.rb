@@ -11,13 +11,15 @@ class Post < ApplicationRecord
     validates :longitude, presence: true
     validates :discover_date, presence: true
 
-    # 画像をリサイズする
+    # image_urlで画像URLを返す
     def image_url
-        if image.attached?
-            image_variant = image.variant(resize_to_limit: [700, nil]).processed
-            url_for(image_variant)
-        else
-            nil
-        end
+        image.attached? ? url_for(resized_image_variant) : nil
+    end
+
+    private
+
+    # 画像の横幅を最大700pxに制限する
+    def resized_image_variant
+        image.variant(resize_to_limit: [700, nil]).processed
     end
 end
