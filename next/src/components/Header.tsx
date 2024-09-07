@@ -130,12 +130,14 @@ const Header = () => {
                       </Typography>
                     </Box>
                     <Divider />
-                    <MenuItem>
-                      <ListItemIcon>
-                        <MapIcon fontSize="small" />
-                      </ListItemIcon>
-                      マップ
-                    </MenuItem>
+                    <Link href="/map">
+                      <MenuItem>
+                        <ListItemIcon>
+                          <MapIcon fontSize="small" />
+                        </ListItemIcon>
+                        マップ
+                      </MenuItem>
+                    </Link>
                     <MenuItem>
                       <ListItemIcon>
                         <AccountBoxIcon fontSize="small" />
