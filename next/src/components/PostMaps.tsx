@@ -11,6 +11,7 @@ type LatLng = {
   lat: number
   lng: number
 }
+
 type PostMapsProps = {
   updateLatLng: (lat: number, lng: number) => void
   updateAddress: (address: string) => void

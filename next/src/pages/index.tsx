@@ -18,7 +18,6 @@ const Index: NextPage = () => {
 
   if (error) return <Error />
   if (!data) return <Loading />
-
   const posts = camelcaseKeys(data.posts)
   const meta = camelcaseKeys(data.meta)
 

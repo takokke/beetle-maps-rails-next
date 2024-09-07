@@ -11,11 +11,11 @@ class Api::V1::MapsController < ApplicationController
         end
 
         # 日本の範囲を超えて表示されている場合は空を返す
-        # 北緯 20度から45度の間 東経 120度から150度の間 
+        # 北緯 20度から45度の間 東経 120度から150度の間
 
         # 一つの地方のおよその範囲は、131.14614691411475 - 136.7431440531297 = 5.596997139より
-        # 経度の差が5.597以上の時は何も返さない
-        if (point_tr["lon"].to_f - point_bl["lon"].to_f).abs >= 5.597
+        # 経度の差が6以上の時は何も返さない
+        if (point_tr["lon"].to_f - point_bl["lon"].to_f).abs >= 6
             render json: []
             return
         end

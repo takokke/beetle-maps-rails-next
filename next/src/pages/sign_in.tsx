@@ -8,7 +8,6 @@ import { useForm, SubmitHandler, Controller } from 'react-hook-form'
 import { useSnackbarState, useUserState } from '@/hooks/useGlobalState'
 import { styles } from '@/styles'
 import { SignInFormData } from '@/types/SignInFormData'
-
 const SignIn: NextPage = () => {
   const router = useRouter()
   const [user, setUser] = useUserState()
@@ -18,7 +17,6 @@ const SignIn: NextPage = () => {
     defaultValues: { email: '', password: '' },
   })
   const [isLoading, setIsLoading] = useState(false)
-
   const validationRules = {
     email: {
       required: 'メールアドレスを入力してください。',
