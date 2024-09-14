@@ -93,6 +93,7 @@ const Map: NextPage = () => {
       )}
     </Box>
   )
+
   return (
     <Box>
       <Drawer open={open} onClose={toggleDrawer(false)}>

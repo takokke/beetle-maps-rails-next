@@ -8,6 +8,7 @@ export type PostType = {
   discoverDate: string
   imageUrl: string
   user: {
+    id: number
     name: string
   }
 }
