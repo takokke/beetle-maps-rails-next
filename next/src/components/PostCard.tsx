@@ -1,3 +1,4 @@
+import FavoriteIcon from '@mui/icons-material/Favorite'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined'
@@ -6,8 +7,10 @@ import {
   Avatar,
   Box,
   Card,
+  CardActions,
   CardContent,
   CardHeader,
+  IconButton,
   Typography,
   IconButton,
   Menu,
@@ -50,6 +53,24 @@ const PostCard = (props: PostCardProps) => {
   //globalステートメントのユーザーのidとpost.user.idが一致
   return (
     <Card>
+      <CardHeader
+        sx={{ paddingX: '8px', paddingY: '8px' }}
+        avatar={
+          <Avatar>
+            <PersonIcon />
+          </Avatar>
+        }
+      />
+      <Box sx={{ position: 'relative', width: '100%', height: 200 }}>
+        <Image
+          layout="fill"
+          src={props.imageUrl}
+          blurDataURL={props.imageUrl}
+          alt="生き物の画像"
+          objectFit="cover"
+          placeholder="blur"
+        />
+      </Box>
       <CardContent sx={{ padding: '0' }}>
         <CardHeader
           sx={{ padding: '7px 15px 7px 4px' }}
@@ -110,6 +131,11 @@ const PostCard = (props: PostCardProps) => {
           <Typography sx={{ fontSize: 12 }}>{address}</Typography>
         </Box>
       </CardContent>
+      <CardActions disableSpacing>
+        <IconButton aria-label="add to favorites">
+          <FavoriteIcon />
+        </IconButton>
+      </CardActions>
     </Card>
   )
 }
