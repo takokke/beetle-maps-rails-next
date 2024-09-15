@@ -1,10 +1,13 @@
+import FavoriteIcon from '@mui/icons-material/Favorite'
 import PersonIcon from '@mui/icons-material/Person'
 import {
   Avatar,
   Box,
   Card,
+  CardActions,
   CardContent,
   CardHeader,
+  IconButton,
   Typography,
 } from '@mui/material'
 import Image from 'next/image'
@@ -21,25 +24,25 @@ const omit = (text: string) => (len: number) => (ellipsis: string) =>
 const PostCard = (props: PostCardProps) => {
   return (
     <Card>
-      <CardContent sx={{ padding: '0' }}>
-        <CardHeader
-          avatar={
-            <Avatar>
-              <PersonIcon />
-            </Avatar>
-          }
+      <CardHeader
+        sx={{ paddingX: '8px', paddingY: '8px' }}
+        avatar={
+          <Avatar>
+            <PersonIcon />
+          </Avatar>
+        }
+      />
+      <Box sx={{ position: 'relative', width: '100%', height: 200 }}>
+        <Image
+          layout="fill"
+          src={props.imageUrl}
+          blurDataURL={props.imageUrl}
+          alt="生き物の画像"
+          objectFit="cover"
+          placeholder="blur"
         />
-        <Box sx={{ position: 'relative', width: '100%', height: 200 }}>
-          <Image
-            layout="fill"
-            src={props.imageUrl}
-            blurDataURL={props.imageUrl}
-            alt="生き物の画像"
-            objectFit="cover"
-            placeholder="blur"
-          />
-        </Box>
-
+      </Box>
+      <CardContent sx={{ padding: '0' }}>
         <Typography
           component="h3"
           sx={{
@@ -55,6 +58,11 @@ const PostCard = (props: PostCardProps) => {
           <Typography sx={{ fontSize: 12 }}>{props.userName}</Typography>
         </Box>
       </CardContent>
+      <CardActions disableSpacing>
+        <IconButton aria-label="add to favorites">
+          <FavoriteIcon />
+        </IconButton>
+      </CardActions>
     </Card>
   )
 }
