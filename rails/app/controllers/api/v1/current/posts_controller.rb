@@ -1,5 +1,5 @@
 class Api::V1::Current::PostsController < Api::V1::BaseController
-    before_action :authenticate_user!, only: [:create]
+    before_action :authenticate_user!, only: [:create, :destroy]
 
     def create
         post = current_user.posts.create!(create_post_params)
@@ -15,7 +15,7 @@ class Api::V1::Current::PostsController < Api::V1::BaseController
     def destroy
         post = current_user.posts.find(params[:id])
         post.destroy!
-        render json: {message: "投稿を削除しました"}, status: :ok
+        render json: {message: "投稿を削除しました"}, status: 204
     end
 
     private
