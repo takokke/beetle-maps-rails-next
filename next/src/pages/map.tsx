@@ -47,14 +47,13 @@ const Map: NextPage = () => {
     : null
 
   const { data, error } = useSWR(url, fetcher)
-  console.log(data)
 
   if (error) return <Error />
 
   const posts: PostType[] = data ? camelcaseKeys(data) : []
 
   const DrawerList = (
-    <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
+    <Box sx={{ width: 400 }} role="presentation" onClick={toggleDrawer(true)}>
       {selectedPost ? (
         <>
           <List>
