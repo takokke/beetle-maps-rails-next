@@ -1,5 +1,14 @@
+import CloudUploadIcon from '@mui/icons-material/CloudUpload'
 import { LoadingButton } from '@mui/lab'
-import { Box, Stack, TextField, Container, Typography } from '@mui/material'
+import {
+  Box,
+  Button,
+  Stack,
+  TextField,
+  Container,
+  Typography,
+} from '@mui/material'
+import { styled } from '@mui/material/styles'
 import axios, { AxiosError } from 'axios'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
@@ -8,6 +17,20 @@ import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 import PostMaps from '@/components/PostMaps'
 import { useSnackbarState } from '@/hooks/useGlobalState'
 import { PostFormData } from '@/types/PostFormData'
+// React Material File Upload
+//見えないinput要素のstyleを定義
+
+const VisuallyHiddenInput = styled('input')({
+  clip: 'rect(0 0 0 0)',
+  clipPath: 'inset(50%)',
+  height: 1,
+  overflow: 'hidden',
+  position: 'absolute',
+  bottom: 0,
+  left: 0,
+  whiteSpace: 'nowrap',
+  width: 1,
+})
 
 const CurrentPostsNew: NextPage = () => {
   const router = useRouter()
@@ -129,22 +152,32 @@ const CurrentPostsNew: NextPage = () => {
           }}
         >
           <Typography>写真をアップロードしよう</Typography>
+
           <Controller
             name="image"
             control={control}
             rules={validationRules.image}
-            render={({ field: { onChange, onBlur }, fieldState }) => (
+            render={({ field: { onChange }, fieldState }) => (
               <>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => {
-                    if (e.target.files) {
-                      onChange(e.target.files)
-                    }
-                  }}
-                  onBlur={onBlur}
-                />
+                <Button
+                  component="label"
+                  role={undefined}
+                  variant="contained"
+                  tabIndex={-1}
+                  startIcon={<CloudUploadIcon />}
+                >
+                  Upload files
+                  <VisuallyHiddenInput
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      if (e.target.files) {
+                        onChange(e.target.files)
+                      }
+                    }}
+                    multiple
+                  />
+                </Button>
                 {fieldState.error && (
                   <span style={{ color: 'red' }}>
                     {fieldState.error.message}
