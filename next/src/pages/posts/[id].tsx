@@ -1,6 +1,17 @@
 import ArrowBackIosSharpIcon from '@mui/icons-material/ArrowBackIosSharp'
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp'
-import { Box, Container } from '@mui/material'
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
+import CommentIcon from '@mui/icons-material/Comment'
+import PersonIcon from '@mui/icons-material/Person'
+import PlaceIcon from '@mui/icons-material/Place'
+import {
+  Box,
+  Stack,
+  Container,
+  Avatar,
+  Typography,
+  IconButton,
+} from '@mui/material'
 import camelcaseKeys from 'camelcase-keys'
 import { NextPage } from 'next'
 import Image from 'next/image'
@@ -27,13 +38,36 @@ const PostDetail: NextPage = () => {
 
   return (
     <Box css={styles.pageMinHeight} sx={{ backgroundColor: '#e6f2ff' }}>
-      <Container maxWidth="lg" sx={{ pt: 6 }}>
+      <Container maxWidth="lg" sx={{ pt: 2 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Typography
+            sx={{
+              fontSize: 14,
+            }}
+          >
+            <IconButton sx={{ p: 0, mr: 2 }}>
+              <Avatar>
+                <PersonIcon />
+              </Avatar>
+            </IconButton>
+            {post.user.name}
+          </Typography>
+        </Box>
         <Carousel
           NextIcon={<ArrowForwardIosSharpIcon />}
           PrevIcon={<ArrowBackIosSharpIcon />}
           swipe={false}
           autoPlay={false}
           navButtonsAlwaysVisible={true}
+          navButtonsWrapperProps={{
+            //矢印ボタン周りの設定
+            style: {
+              position: 'absolute', // 絶対位置にする
+              top: '50%', // 上から50%の位置
+              transform: 'translateY(-50%)', // 縦中央に調整
+              height: '60px',
+            },
+          }}
         >
           <Box sx={{ height: 450 }}>
             <PostDetailMap post={post} />
@@ -49,6 +83,47 @@ const PostDetail: NextPage = () => {
             </Box>
           )}
         </Carousel>
+        {/* 日付、場所、観察メモの表示 */}
+        <Box
+          sx={{
+            mt: 2,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Box sx={{ width: '100%', maxWidth: '400px' }}>
+            <Stack
+              direction="row"
+              alignItems="center"
+              spacing={2}
+              sx={{ mb: 2 }}
+            >
+              <CalendarMonthIcon />
+              <Typography variant="body2" color="textSecondary">
+                {new Date(post.discoverDate).toLocaleDateString('ja-JP')}
+              </Typography>
+            </Stack>
+            <Stack
+              direction="row"
+              alignItems="center"
+              spacing={2}
+              sx={{ mb: 2 }}
+            >
+              <PlaceIcon />
+              <Typography variant="body2" color="textSecondary">
+                {post.address}
+              </Typography>
+            </Stack>
+
+            <Stack direction="row" alignItems="center" spacing={2}>
+              <CommentIcon />
+              <Typography variant="body2" color="textSecondary">
+                {post.caption}
+              </Typography>
+            </Stack>
+          </Box>
+        </Box>
       </Container>
     </Box>
   )
