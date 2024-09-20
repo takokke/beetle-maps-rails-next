@@ -26,8 +26,6 @@ class Api::V1::MapsController < ApplicationController
             return
         end
         
-        # 数の制限がいるかも
-        # 最新の投稿をlimit 50で取得
         posts = Post.where(
             "latitude < ? AND latitude > ? AND longitude < ? AND longitude > ?", 
             point_tr["lat"],

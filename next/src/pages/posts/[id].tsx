@@ -39,7 +39,19 @@ const PostDetail: NextPage = () => {
   return (
     <Box css={styles.pageMinHeight} sx={{ backgroundColor: '#e6f2ff' }}>
       <Container maxWidth="lg" sx={{ pt: 2 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          <Typography
+            variant="h3"
+            sx={{
+              fontSize: 18,
+              textAlign: 'center',
+              fontWeight: 'bold',
+            }}
+          >
+            {post.creatureName}
+          </Typography>
+        </Box>
+        <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
           <Typography
             sx={{
               fontSize: 14,
@@ -47,12 +59,13 @@ const PostDetail: NextPage = () => {
           >
             <IconButton sx={{ p: 0, mr: 2 }}>
               <Avatar>
-                <PersonIcon />
+                <PlaceIcon />
               </Avatar>
             </IconButton>
-            {post.user.name}
+            {post.address}
           </Typography>
         </Box>
+
         <Carousel
           NextIcon={<ArrowForwardIosSharpIcon />}
           PrevIcon={<ArrowBackIosSharpIcon />}
@@ -62,7 +75,7 @@ const PostDetail: NextPage = () => {
           navButtonsWrapperProps={{
             //矢印ボタン周りの設定
             style: {
-              position: 'absolute', // 絶対位置にする
+              position: 'absolute',
               top: '50%', // 上から50%の位置
               transform: 'translateY(-50%)', // 縦中央に調整
               height: '60px',
@@ -83,7 +96,7 @@ const PostDetail: NextPage = () => {
             </Box>
           )}
         </Carousel>
-        {/* 日付、場所、観察メモの表示 */}
+
         <Box
           sx={{
             mt: 2,
@@ -110,9 +123,9 @@ const PostDetail: NextPage = () => {
               spacing={2}
               sx={{ mb: 2 }}
             >
-              <PlaceIcon />
+              <PersonIcon />
               <Typography variant="body2" color="textSecondary">
-                {post.address}
+                投稿者: {post.user.name}
               </Typography>
             </Stack>
 
