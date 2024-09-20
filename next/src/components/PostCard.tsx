@@ -1,8 +1,8 @@
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
-import FavoriteIcon from '@mui/icons-material/Favorite'
 import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined'
 import PersonIcon from '@mui/icons-material/Person'
+import PlaceIcon from '@mui/icons-material/Place'
 import {
   Avatar,
   Box,
@@ -26,6 +26,7 @@ type PostCardProps = {
   imageUrl: string
   creatureName: string
   address: string
+  discoverDate: string
   onDelete: (id: number) => void
   user: {
     id: number
@@ -37,7 +38,8 @@ const omit = (text: string) => (len: number) => (ellipsis: string) =>
   text.length >= len ? text.slice(0, len - ellipsis.length) + ellipsis : text
 
 const PostCard = (props: PostCardProps) => {
-  const { id, imageUrl, creatureName, user, address, onDelete } = props
+  const { id, imageUrl, creatureName, user, address, discoverDate, onDelete } =
+    props
   const [currentUser] = useUserState()
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
@@ -58,9 +60,11 @@ const PostCard = (props: PostCardProps) => {
         sx={{ padding: '7px 15px 7px 4px' }}
         avatar={
           <Avatar>
-            <PersonIcon />
+            <PlaceIcon />
           </Avatar>
         }
+        title={address}
+        subheader={new Date(discoverDate).toLocaleDateString('ja-JP')}
         action={
           currentUser.isSignedIn &&
           currentUser.id === user.id && (
@@ -98,26 +102,30 @@ const PostCard = (props: PostCardProps) => {
           placeholder="blur"
         />
       </Box>
-      <CardContent sx={{ padding: '0' }}>
+      <CardContent sx={{ padding: '5px 0 0 8px' }}>
         <Typography
           component="h3"
           sx={{
             minHeight: 20,
-            fontSize: 16,
+            fontSize: 18,
             fontWeight: 'bold',
             lineHeight: 1.5,
+            paddingLeft: 1,
           }}
         >
           {omit(creatureName)(45)('...')}
         </Typography>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Typography sx={{ fontSize: 12 }}>{address}</Typography>
+          <Typography sx={{ fontSize: 12 }}>
+            <PersonIcon />
+            {user.name}
+          </Typography>
         </Box>
       </CardContent>
-      <CardActions disableSpacing style={{ justifyContent: 'space-between' }}>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
+      <CardActions
+        disableSpacing
+        style={{ justifyContent: 'flex-end', paddingTop: '0' }}
+      >
         <Link href={'/posts/' + id}>
           <Button size="small">地図で見る</Button>
         </Link>

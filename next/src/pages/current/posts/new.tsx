@@ -222,7 +222,7 @@ const CurrentPostsNew: NextPage = () => {
               <TextField
                 {...field}
                 type="textarea"
-                label="説明"
+                label="観察メモ"
                 placeholder="コメントをここに"
                 rows={4}
                 multiline

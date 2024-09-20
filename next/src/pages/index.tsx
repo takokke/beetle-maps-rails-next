@@ -85,6 +85,7 @@ const Index: NextPage = () => {
                 creatureName={post.creatureName}
                 user={post.user}
                 address={post.address}
+                discoverDate={post.discoverDate}
                 onDelete={handleDeleteClick}
               ></PostCard>
             </Grid>
