@@ -1,17 +1,32 @@
-# beetle-maps-rails-next
+# beetle-maps-ver.2
 
 ## 概要
-このアプリは、カブトムシやクワガタを見つけた場所をみんなに共有できるサイトです。友達が「カブトムシ見つけたいけど、どこにおるか分からない」という話を聞いたのがきっかけで制作しました。
+このアプリは、カブトムシやクワガタを見つけた場所をみんなに共有できるWebアプリケーションです。
+私は現在とても自然豊かな場所に住んでおり、友達とよくカブトムシを探しにいっています。
+しかし、カブトムシがどこで獲れるかネットで調べても、大まかな地域しか知ることができずに、具体的な場所を共有するサイトはありません。
+とある理容室で「子どものためにカブトムシを見つけたいけど、どこにおるか分からん」という父親の話を聞いたのをきっかけに開発しました。
+
+## URL
+https://beetle-maps.com
 
 ## 使用技術
 - バックエンド技術
-    - Ruby on Rails
-    - nginx(リバースプロキシ)
+    - RailsAPI
+    - Nginx
     - MySQL
 
 - フロントエンド技術
     - Next.js
-    - TailwindCSS
+    - MUI
+
+- インフラ(AWS)
+    - VPC
+    - ECS(Fargate)
+    - ECR
+    - RDS
+    - Route53
+    - ACM
+    - S3
 
 ## 設計図
 - [ER図](https://drive.google.com/file/d/1N4TVCman62Den7zuJCm6MzP21jmxTAan/view?usp=sharing)
