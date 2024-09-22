@@ -1,3 +1,4 @@
+import CloudDoneIcon from '@mui/icons-material/CloudDone'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
 import { LoadingButton } from '@mui/lab'
 import {
@@ -10,6 +11,7 @@ import {
 } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import axios, { AxiosError } from 'axios'
+import loadImage from 'blueimp-load-image'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
@@ -17,9 +19,8 @@ import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 import PostMaps from '@/components/PostMaps'
 import { useSnackbarState } from '@/hooks/useGlobalState'
 import { PostFormData } from '@/types/PostFormData'
-// React Material File Upload
-//見えないinput要素のstyleを定義
 
+// 隠蔽したinput要素をmui/styledで定義
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
   clipPath: 'inset(50%)',
@@ -36,10 +37,21 @@ const CurrentPostsNew: NextPage = () => {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const [, setSnackbar] = useSnackbarState()
+  //画像アップロードボタンの状態管理
+  const [uploadBtn, setUploadBtn] = useState<{
+    message: string
+    color: 'primary' | 'success' | undefined
+    icon: React.ReactNode
+  }>({
+    message: 'Upload files',
+    color: 'primary',
+    icon: <CloudUploadIcon />,
+  })
 
   const { control, setValue, handleSubmit } = useForm<PostFormData>({
     defaultValues: {
       image: null,
+      discoverDate: '',
       creatureName: '',
       caption: '',
       latitude: 0,
@@ -78,6 +90,35 @@ const CurrentPostsNew: NextPage = () => {
       required: '経度を入力してください。',
     },
   }
+  // ファイルを選択したときの処理
+  const handleFileChange = (
+    files: FileList,
+    onChange: (...event: FileList[]) => void,
+  ) => {
+    const file = files[0]
+
+    loadImage.parseMetaData(file, (data) => {
+      if (data.exif && data.exif[306]) {
+        const dateString = String(data.exif[306])
+
+        // フォーマットを整形
+        const formattedDateString = dateString
+          .replace(/:/g, '-')
+          .replace(' ', 'T')
+          .split('T')[0]
+        // setDate(formattedDateString)
+        setValue('discoverDate', formattedDateString)
+      }
+    })
+
+    onChange(files) // ファイルをフォームのフィールドにセット
+    setUploadBtn({
+      ...uploadBtn,
+      message: file.name,
+      color: 'success',
+      icon: <CloudDoneIcon />,
+    })
+  }
 
   // 投稿処理
   const onSubmit: SubmitHandler<PostFormData> = (data) => {
@@ -92,7 +133,6 @@ const CurrentPostsNew: NextPage = () => {
     }
 
     if (data.image === null) return
-    console.log(data.image)
     // 投稿データの作成
     const formData = new FormData()
     formData.append('post[image]', data.image[0])
@@ -160,22 +200,22 @@ const CurrentPostsNew: NextPage = () => {
             render={({ field: { onChange }, fieldState }) => (
               <>
                 <Button
+                  color={uploadBtn.color}
                   component="label"
                   role={undefined}
                   variant="contained"
                   tabIndex={-1}
-                  startIcon={<CloudUploadIcon />}
+                  startIcon={uploadBtn.icon}
                 >
-                  Upload files
+                  {uploadBtn.message}
                   <VisuallyHiddenInput
                     type="file"
                     accept="image/*"
                     onChange={(e) => {
                       if (e.target.files) {
-                        onChange(e.target.files)
+                        handleFileChange(e.target.files, onChange)
                       }
                     }}
-                    multiple
                   />
                 </Button>
                 {fieldState.error && (
