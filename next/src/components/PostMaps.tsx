@@ -1,6 +1,7 @@
 import { Box } from '@mui/material'
 import { GoogleMap } from '@react-google-maps/api'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useRef } from 'react'
+import { useCurrentLocation } from '@/hooks/useGlobalState'
 
 const containerStyle = {
   width: '100%',
@@ -19,33 +20,13 @@ type PostMapsProps = {
 
 const PostMaps = (props: PostMapsProps) => {
   const { updateLatLng, updateAddress } = props
+  const [currentLocation] = useCurrentLocation()
 
   const geocoder = useRef<google.maps.Geocoder | null>(null)
-
   const [centerLatLng, setCenterLatLng] = useState<LatLng>({
-    lat: 35.7022589,
-    lng: 139.7744733,
+    lat: currentLocation.lat,
+    lng: currentLocation.lng,
   })
-
-  // geocoderのインスタンスが繰り返し生成されるのを防ぐ
-  useEffect(() => {
-    geocoder.current = new google.maps.Geocoder()
-  }, [])
-
-  // navigatorAPIを用いて、現在地の位置情報を取得
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords
-        // 現在地の緯度・経度をsetする
-        setCenterLatLng({ lat: latitude, lng: longitude })
-      },
-      (error) => {
-        console.error('Error fetching current location:', error)
-        setCenterLatLng({ lat: 35.7022589, lng: 139.7744733 })
-      },
-    )
-  }, [])
 
   //マップをクリックした時の処理
   const clickSetLatLng = (event: google.maps.MapMouseEvent) => {
