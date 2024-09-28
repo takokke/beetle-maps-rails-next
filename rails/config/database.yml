@@ -10,6 +10,7 @@ development:
   host: db
   database: myapp_development
   password: password
+  timeout: 5000
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.

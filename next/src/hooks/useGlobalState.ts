@@ -1,6 +1,5 @@
 // グローバルステートの定義ファイル
 // ・・・・全てのReactコンポーネントから参照・変更できるステートのこと
-import { useEffect } from 'react'
 import useSWR from 'swr'
 import { snackbarStateType } from '@/types/snackbarStateType'
 import { userStateType } from '@/types/userStateType'
@@ -55,25 +54,6 @@ export const useCurrentLocation = () => {
   const { data: state, mutate: setState } = useSWR<LatLng>('currentLocation', {
     fallbackData,
   })
-
-  useEffect(() => {
-    const handleSuccess = (position: GeolocationPosition) => {
-      const { latitude, longitude } = position.coords
-      const newLocation: LatLng = { lat: latitude, lng: longitude }
-      setState(newLocation)
-    }
-
-    const handleError = (error: GeolocationPositionError) => {
-      console.error('Error fetching current location:', error)
-    }
-
-    navigator.geolocation.getCurrentPosition(handleSuccess, handleError)
-
-    // Cleanup function if needed
-    return () => {
-      // You can implement cleanup logic if required
-    }
-  }, [setState])
 
   return [state, setState] as [LatLng, (value: LatLng) => void]
 }

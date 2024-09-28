@@ -6,6 +6,7 @@ import { AppProps } from 'next/app'
 import * as React from 'react'
 import '@/styles/destyle.css'
 import CurrentUserFetch from '@/components/CurrentUserFetch'
+import GetCurrentPosition from '@/components/GetCurrentPosition'
 import Header from '@/components/Header'
 import Loading from '@/components/Loading'
 import SuccessSnackbar from '@/components/Snackbar'
@@ -28,6 +29,7 @@ export default function MyApp(props: MyAppProps): JSX.Element {
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
+        <GetCurrentPosition />
         <CurrentUserFetch />
         <Header />
         <LoadScript loadingElement={<Loading />} googleMapsApiKey={apiKey}>
