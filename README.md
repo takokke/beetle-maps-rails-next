@@ -29,6 +29,6 @@ https://beetle-maps.com
     - S3
 
 ## 設計図
+- [AWSの設計](https://drive.google.com/file/d/1YV0fLhevri97cmt0jGy6ZM03aG8v7T9R/view?usp=sharing)
 - [ER図](https://drive.google.com/file/d/1N4TVCman62Den7zuJCm6MzP21jmxTAan/view?usp=sharing)
 - [ワイヤーフレーム](https://drive.google.com/file/d/1HKXpgER2BpMx9Z4zozPHb8W9DDngg1BA/view?usp=sharing)
-
