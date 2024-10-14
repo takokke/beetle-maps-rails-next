@@ -1,4 +1,6 @@
 class PostSerializer < ActiveModel::Serializer
-  attributes :id, :creature_name, :caption, :latitude, :longitude, :address, :discover_date, :image_url # image_urlで画像urlを返す
+  attributes  :id, :creature_name, :caption, :latitude, :longitude, :address, :discover_date, :favorites_count, :image_url
+  
   belongs_to :user, serializer: UserSerializer
+  belongs_to :favorites, serializer: FavoriteSerializer
 end

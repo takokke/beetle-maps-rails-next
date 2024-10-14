@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
 import { GoogleMap } from '@react-google-maps/api'
-import { useState, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useCurrentLocation } from '@/hooks/useGlobalState'
 
 const containerStyle = {
@@ -27,6 +27,11 @@ const PostMaps = (props: PostMapsProps) => {
     lat: currentLocation.lat,
     lng: currentLocation.lng,
   })
+
+  // geocoderのインスタンスが繰り返し生成されるのを防ぐ
+  useEffect(() => {
+    geocoder.current = new google.maps.Geocoder()
+  }, [])
 
   //マップをクリックした時の処理
   const clickSetLatLng = (event: google.maps.MapMouseEvent) => {

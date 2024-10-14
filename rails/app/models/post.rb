@@ -4,6 +4,8 @@ class Post < ApplicationRecord
     has_one_attached :image # 画像つき
     belongs_to :user
 
+    has_many :favorites, dependent: :destroy
+
     validates :creature_name, presence: true
     validates :image, presence: true
     validates :address, presence: true
@@ -14,6 +16,11 @@ class Post < ApplicationRecord
     # image_urlで画像URLを返す
     def image_url
         image.attached? ? url_for(resized_image_variant) : nil
+    end
+
+    # 引数のユーザがいいねをしているか確認するメソッド
+    def favorited_by?(user)
+        favorites.exists?(user_id: user.id)
     end
 
     private
