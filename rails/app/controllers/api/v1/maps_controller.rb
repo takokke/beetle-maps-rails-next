@@ -1,4 +1,4 @@
-class Api::V1::MapsController < ApplicationController
+class Api::V1::MapsController < Api::V1::BaseController
     def show
         # 地図上に表示されているデータのみを取り出す
 

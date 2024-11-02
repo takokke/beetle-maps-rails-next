@@ -15,7 +15,7 @@ class Api::V1::Current::PostsController < Api::V1::BaseController
     def destroy
         post = current_user.posts.find(params[:id])
         post.destroy!
-        render json: {message: "投稿を削除しました"}, status: 204
+        render status: :no_content #204
     end
 
     private

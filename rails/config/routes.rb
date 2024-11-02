@@ -20,7 +20,11 @@ Rails.application.routes.draw do
       #   # Define routes for Admin within this block.
       # end
 
-      resources :posts, only: [:show, :index]
+      resources :posts, only: [:show, :index] do
+        # いいねはuser_idとpost_idがわかれば一意になるのでresourceを用いる。
+        resource :favorites, only: [:create, :destroy]
+      end
+
       resource :map, only: [:show]
       namespace :current do
         resource :user, only: [:show] # current_userを返す

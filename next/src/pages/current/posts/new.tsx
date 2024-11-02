@@ -90,7 +90,7 @@ const CurrentPostsNew: NextPage = () => {
       required: '経度を入力してください。',
     },
   }
-  // ファイルを選択したときの処理
+  // ファイルを選択したときの日付を入力する処理
   const handleFileChange = (
     files: FileList,
     onChange: (...event: FileList[]) => void,
@@ -98,17 +98,21 @@ const CurrentPostsNew: NextPage = () => {
     const file = files[0]
 
     loadImage.parseMetaData(file, (data) => {
+      let dateString = ''
+      // EXIFがあるかチェック
       if (data.exif && data.exif[306]) {
-        const dateString = String(data.exif[306])
-
-        // フォーマットを整形
-        const formattedDateString = dateString
-          .replace(/:/g, '-')
-          .replace(' ', 'T')
-          .split('T')[0]
-        // setDate(formattedDateString)
-        setValue('discoverDate', formattedDateString)
+        dateString = String(data.exif[306])
+      } else {
+        // EXIFがない場合は、ファイルの作成日時や現在時刻を使用
+        const now = new Date() // 現在時刻を取得
+        dateString = now.toISOString() // ISO形式の文字列に変換
+        console.log(dateString)
       }
+      const formattedDateString = dateString
+        .replace(/:/g, '-')
+        .replace(' ', 'T')
+        .split('T')[0]
+      setValue('discoverDate', formattedDateString)
     })
 
     onChange(files) // ファイルをフォームのフィールドにセット

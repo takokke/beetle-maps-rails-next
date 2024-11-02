@@ -45,12 +45,12 @@ gem "config"
 # ページネーション機能
 gem "kaminari"
 
-# 画像のリサイズ
-gem 'mini_magick'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  # N+1発生時にアラートを表示する
+  gem "bullet"
 end
 
 group :development do
