@@ -7,7 +7,7 @@
 友人の「カブトムシを見つけたいけど、どこにおるか分からん」という話を聞いたのがきっかけで開発しました。
 
 ## URL
-https://beetle-maps.com
+https://beetle-maps.vercel.app
 
 ## 使用技術
 - バックエンド技術
@@ -19,16 +19,25 @@ https://beetle-maps.com
     - Next.js
     - MUI
 
-- インフラ(AWS)
-    - VPC
-    - ECS(Fargate)
-    - ECR
-    - RDS
-    - Route53
-    - ACM
-    - S3
+- インフラ
+    - Vercel
+    - AWS
+        - VPC
+        - ECS(Fargate)
+        - ECR
+        - RDS
+        - Route53
+        - ACM
+        - S3
 
 ## 設計図
-- [AWSの設計](https://drive.google.com/file/d/1YV0fLhevri97cmt0jGy6ZM03aG8v7T9R/view?usp=sharing)
+- [インフラの設計](https://drive.google.com/file/d/1YV0fLhevri97cmt0jGy6ZM03aG8v7T9R/view?usp=sharing)
 - [ER図](https://drive.google.com/file/d/1N4TVCman62Den7zuJCm6MzP21jmxTAan/view?usp=sharing)
 - [ワイヤーフレーム](https://drive.google.com/file/d/1HKXpgER2BpMx9Z4zozPHb8W9DDngg1BA/view?usp=sharing)
+
+## 技術的な変更点
+
+### R5 11/3 フロントエンドをAWS FargateからVercelに変更
+理由: AWSの無料期間が過ぎ、料金が跳ね上がったため。
+バックエンドに関しては、今月の料金を様子見。
+Herokuへの移行も考える。
