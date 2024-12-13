@@ -9,7 +9,7 @@ class Api::V1::FavoritesController < Api::V1::BaseController
             begin
                 ActiveRecord::Base.transaction do
                     post.favorites.create!(user_id: current_user.id)
-                    post.increment!(:favorites_count)
+                    post.increment!(:favorites_count) # いいね数のキャッシュをインクリメント
                 end
             rescue => e
                 render json: {message: "エラーが発生しました", error: e.message}, status: :internal_server_error # 500
@@ -26,11 +26,10 @@ class Api::V1::FavoritesController < Api::V1::BaseController
         favorite = post.favorites.find_by(user_id: current_user.id)
 
         if favorite.present?
-            # トランサクジョン
             begin
                 ActiveRecord::Base.transaction do
                     favorite.destroy!
-                    post.decrement!(:favorites_count)
+                    post.decrement!(:favorites_count) # いいね数のキャッシュをデクリメント
                 end
             rescue => e
                 render json: {message: "エラーが発生しました", error: e.message}, status: :internal_server_error # 500
