@@ -30,7 +30,6 @@ const Index: NextPage = () => {
 
   if (error) return <Error />
   if (!data) return <Loading />
-
   const meta = camelcaseKeys(data.meta)
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
@@ -56,7 +55,7 @@ const Index: NextPage = () => {
       headers: headers,
     })
       .then(() => {
-        setPosts(posts.filter((post) => post.id === id))
+        setPosts(posts.filter((post) => post.id !== id))
         setSnackbar({
           message: '投稿の削除に成功しました',
           severity: 'success',
@@ -87,6 +86,8 @@ const Index: NextPage = () => {
                 address={post.address}
                 discoverDate={post.discoverDate}
                 onDelete={handleDeleteClick}
+                favoritesCount={post.favoritesCount}
+                favorites={post.favorites}
               ></PostCard>
             </Grid>
           ))}

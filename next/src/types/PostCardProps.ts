@@ -1,16 +1,14 @@
 import { FavoriteType } from './Favorite'
 
-export type PostType = {
+export type PostCardProps = {
   id: number
+  imageUrl: string
   creatureName: string
-  caption: string
-  latitude: number
-  longitude: number
   address: string
   discoverDate: string
-  imageUrl: string
-  favorites: FavoriteType[]
+  onDelete: (id: number) => void
   favoritesCount: number
+  favorites: FavoriteType[]
   user: {
     id: number
     name: string
