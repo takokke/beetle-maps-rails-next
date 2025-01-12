@@ -1,4 +1,5 @@
 import { Modal, Box, Typography } from '@mui/material'
+import Link from 'next/link'
 import { AuthRequiredModalProps } from '@/types/AuthRequiredModalProps'
 
 const AuthRequiredModal = (props: AuthRequiredModalProps) => {
@@ -25,7 +26,7 @@ const AuthRequiredModal = (props: AuthRequiredModalProps) => {
         }}
       >
         <Typography id="modal-modal-link" variant="h6" component="h2">
-          ログインする
+          <Link href="/sign_in">ログインする</Link>
         </Typography>
         <Typography
           id="modal-modal-link"
@@ -33,7 +34,7 @@ const AuthRequiredModal = (props: AuthRequiredModalProps) => {
           component="h2"
           sx={{ mt: 2 }}
         >
-          ユーザー登録をする
+          <Link href="/sign_up">ユーザー登録をする</Link>
         </Typography>
       </Box>
     </Modal>

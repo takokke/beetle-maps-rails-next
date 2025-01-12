@@ -7,6 +7,7 @@ import PlaceIcon from '@mui/icons-material/Place'
 import {
   Avatar,
   Box,
+  Button,
   Card,
   CardActions,
   CardContent,
@@ -16,6 +17,7 @@ import {
   Menu,
   MenuItem,
 } from '@mui/material'
+import axios, { AxiosError } from 'axios'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
@@ -25,6 +27,7 @@ import { PostCardProps } from '@/types/PostCardProps'
 
 const omit = (text: string) => (len: number) => (ellipsis: string) =>
   text.length >= len ? text.slice(0, len - ellipsis.length) + ellipsis : text
+const FavoriteFontSize = '1.3rem'
 
 const PostCard = (props: PostCardProps) => {
   const {
@@ -36,14 +39,19 @@ const PostCard = (props: PostCardProps) => {
     discoverDate,
     onDelete,
     favorites,
-    favoritesCount,
+    favoritesCount: initialFavoriteCount,
   } = props
   const [currentUser] = useUserState()
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const [isFavorited, setIsFavorited] = useState<boolean>(false)
+  const [favoritesCount, setFavoritesCount] =
+    useState<number>(initialFavoriteCount)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const open = Boolean(anchorEl)
-  console.log(isFavorited)
+
+  // いいねの追加・削除をするapiのurl
+  const url =
+    process.env.NEXT_PUBLIC_API_BASE_URL + '/posts/' + id + '/favorites'
 
   // ログインユーザがいいねを押しているかチェックする
   useEffect(() => {
@@ -53,18 +61,60 @@ const PostCard = (props: PostCardProps) => {
     setIsFavorited(hasFavorited)
   }, [favorites, currentUser])
 
+  // 3点リーダーの表示
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
   }
 
+  // 3点リーダーの非表示
   const handleClose = () => {
     setAnchorEl(null)
   }
 
   // いいねボタンをクリック
   const handleLikeClick = () => {
-    setIsModalOpen(true)
+    // ログインしていない場合モーダルを表示する
+    if (!currentUser.isSignedIn) setIsModalOpen(true)
+    const headers = {
+      'Content-Type': 'multipart/form-data',
+      'access-token': localStorage.getItem('access-token'),
+      client: localStorage.getItem('client'),
+      uid: localStorage.getItem('uid'),
+    }
+    if (isFavorited) {
+      // いいねを追加する
+      axios({
+        method: 'DELETE',
+        url: url,
+        headers: headers,
+      })
+        .then(() => {
+          setIsFavorited(false)
+          setFavoritesCount((prev) => prev - 1) //いいね数を減らす
+        })
+        .catch((err: AxiosError<{ error: string }>) => {
+          console.log(err.message)
+          console.log(err)
+        })
+    } else {
+      // いいねを削除する
+      axios({
+        method: 'POST',
+        url: url,
+        headers: headers,
+      })
+        .then(() => {
+          setIsFavorited(true)
+          setFavoritesCount((prev) => prev + 1)
+        })
+        .catch((err: AxiosError<{ error: string }>) => {
+          console.log(err.message)
+          console.log(err)
+        })
+    }
   }
+
+  // モーダルを閉じる。
   const handleCloseModal = () => {
     setIsModalOpen(false)
   }
@@ -145,13 +195,19 @@ const PostCard = (props: PostCardProps) => {
         style={{ justifyContent: 'space-between', paddingTop: '0' }}
       >
         <IconButton
-          sx={{ color: isFavorited ? 'red' : 'gray' }}
+          sx={{
+            fontSize: FavoriteFontSize,
+            color: isFavorited ? 'red' : 'gray',
+          }}
           aria-label="add to favorites"
           onClick={handleLikeClick}
         >
-          <FavoriteIcon />
+          <FavoriteIcon sx={{ fontSize: FavoriteFontSize }} />
           {favoritesCount}
         </IconButton>
+        <Link href={'/posts/' + id}>
+          <Button size="small">地図で見る</Button>
+        </Link>
       </CardActions>
       <AuthRequiredModal isOpen={isModalOpen} onClose={handleCloseModal} />
     </Card>
