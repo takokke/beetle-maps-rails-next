@@ -59,7 +59,8 @@ const PostCard = (props: PostCardProps) => {
       (favorite) => favorite.user_id === currentUser.id,
     )
     setIsFavorited(hasFavorited)
-  }, [favorites, currentUser])
+    setFavoritesCount(initialFavoriteCount) //いいね数をリセット
+  }, [favorites, currentUser, initialFavoriteCount])
 
   // 3点リーダーの表示
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
